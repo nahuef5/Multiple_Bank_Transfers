@@ -1,12 +1,12 @@
-package banc;
+package bank;
 
 //Clase modelo de objeto transferencia
-public class RunTransfer implements Runnable{
-    private Cuenta cta;
+public class Transfer implements Runnable{
+    private Account cta;
     private int ctaOrig;
     private double max;
         
-    public RunTransfer(Cuenta cta,int ctaOrig, double max){
+    public Transfer(Account cta,int ctaOrig, double max){
         this.cta=cta;
         this.ctaOrig=ctaOrig;
         this.max=max;
@@ -19,20 +19,20 @@ public class RunTransfer implements Runnable{
                 //Generamos la cuenta receptora de transferencia
                 int receptor=(int) (Math.random()*100);
                 //valor que se pasara del origen al receptor
-                double q=Math.random()*max;
+                double quantity=Math.random()*max;
                 
-                if(q!=0){
+                if(quantity!=0){
                     try {
-                    cta.transfer(ctaOrig, receptor, q);
+                    cta.transfer(ctaOrig, receptor, quantity);
                     
                     }catch (Exception ex) {
                     System.out.println(ex+"\n");
                     }   
                 }else{
                     //le asignamos nuevo valor si q==0
-                    q=Math.round(Math.random()*max);
+                    quantity=Math.round(Math.random()*max);
                     try {
-                    cta.transfer(ctaOrig, receptor, q);
+                    cta.transfer(ctaOrig, receptor, quantity);
                     
                     }catch (Exception ex) {
                     System.out.println(ex+"\n");

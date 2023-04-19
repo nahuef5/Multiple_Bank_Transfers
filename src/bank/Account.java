@@ -1,27 +1,27 @@
-package banc;
+package bank;
 import java.util.concurrent.locks.*;
 
 //Clase modelo de objeto cuentaCorriente
-public class Cuenta {
+public class Account {
     //arrays de cuentas 
     private final double[] ctaCte;
     //objeto de turno 
-    private Lock turno=new ReentrantLock();
+    private Lock turn=new ReentrantLock();
     //objeto condicion para saldo suficiente de cada hilo
     private Condition saldoSuficiente;
 
-    public Cuenta(){
+    public Account(){
         this.ctaCte = new double[100];
         for(int i=0;i<ctaCte.length;i++){
             ctaCte[i]=3523.98;
         }
-        saldoSuficiente=turno.newCondition();
+        saldoSuficiente=turn.newCondition();
     }
     
     //metodo de transferencia
     public void transfer(int emisor, int receptor, double valor) throws Exception{
         //Generamos turno por cada hilo para que no pueda acceder otro al metodo
-        this.turno.lock();
+        this.turn.lock();
         
         try{
             while(ctaCte[emisor]<valor){
@@ -43,7 +43,7 @@ public class Cuenta {
             saldoSuficiente.signalAll();
         }finally{
             //damos turno al siguiente hilo
-            this.turno.unlock();
+            this.turn.unlock();
         }
     }
     //saldo banco
